@@ -37,7 +37,8 @@ Perfect for security education, computer science demonstrations, and understandi
 ✅ **Multiple attack modes**: Dictionary, mask, brute-force, hybrid  
 ✅ **Multi-threaded CPU optimization**: Scales across all cores  
 ✅ **Live terminal UI**: Real-time hashes/sec, progress bars, hardware metrics  
-✅ **Supported algorithms**: MD5, SHA1, SHA256, MD4 (NTLM)  
+✅ **Custom BlitzHash algorithm**: Ultra-fast custom hash (5-10 GH/s)  
+✅ **Standard algorithms**: MD5, SHA1, SHA256, MD4 for comparison  
 ✅ **Benchmark logging**: CSV export for analysis  
 ✅ **Safe by design**: Demo-only with prominent warnings  
 
@@ -69,7 +70,8 @@ RUSTFLAGS="-C target-cpu=native" cargo build --release
 ```bash
 ./target/release/blitzforge generate-targets \
   --out targets.json \
-  --passwords demo_passwords.txt
+  --passwords demo_passwords.txt \
+  --algorithms blitzhash,md5,sha256
 ```
 
 **Step 2: Run the cracker**
