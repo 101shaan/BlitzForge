@@ -1,8 +1,12 @@
-// cli interface modules
+// core cracking engine modules
 
-pub mod commands;
-pub mod ui;
-pub mod logger;
+pub mod blitzhash;
+pub mod engine;
+pub mod hasher;
+pub mod generator;
+pub mod target;
 
-pub use ui::TerminalUI;
-pub use logger::BenchmarkLogger;
+pub use engine::{Engine, CrackingResult};
+pub use hasher::{Algorithm, Hasher};
+pub use generator::{Generator, DictionaryGenerator, MaskGenerator, BruteForceGenerator};
+pub use target::{Target, TargetMatch};
