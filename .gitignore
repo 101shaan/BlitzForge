@@ -32,3 +32,6 @@ showcase_results/
 # wordlists (too large for git)
 wordlists/*.txt
 !wordlists/.gitkeep
+BUILD_CHECKLIST.MD
+PRESENTATION.MD
+QUICK_REFERENCE.MD
