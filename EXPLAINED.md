@@ -212,10 +212,10 @@ RUSTFLAGS="-C target-cpu=native -C opt-level=3" cargo build --release
 ```
 
 ### Hardware Used
-- CPU: [Your specific CPU model]
-- Cores: [Number of cores/threads]
-- RAM: [Amount of RAM]
-- OS: [Your OS]
+- CPU: [i5-11400f]
+- Cores/Threads: [6/12]
+- RAM: [16GB]
+- OS: [Arch Linux 2025.10.01]
 
 **Result: X.X GH/s sustained throughput**
 

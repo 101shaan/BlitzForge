@@ -2,10 +2,10 @@
 name = "blitzforge"
 version = "1.0.0"
 edition = "2021"
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Shaan Sisodia shaansisodia3@gmail.com"]
 description = "A high-performance password cracker demo for educational purposes"
 license = "MIT"
-repository = "https://github.com/yourusername/blitzforge"
+repository = "https://github.com/101shaan/BlitzForge"
 
 [dependencies]
 # hashing algorithms

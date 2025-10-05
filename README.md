@@ -7,7 +7,7 @@
 
 ---
 
-## ⚠️ CRITICAL SAFETY WARNING
+## 🙃 CRITICAL SAFETY WARNING 🙃
 
 **THIS TOOL IS FOR DEMONSTRATION AND EDUCATIONAL PURPOSES ONLY.**
 
@@ -28,7 +28,6 @@ BlitzForge is a high-performance password cracking demonstration tool that shows
 - Real-time performance metrics and hardware utilization
 - Why slow hashing algorithms (like Argon2) are critical for security
 
-Perfect for security education, computer science demonstrations, and understanding computational limits.
 
 ---
 
@@ -54,7 +53,7 @@ Perfect for security education, computer science demonstrations, and understandi
 ### Build
 
 ```bash
-git clone https://github.com/yourusername/blitzforge.git
+git clone https://github.com/101shaan/BlitzForge.git
 cd blitzforge
 cargo build --release
 ```
@@ -185,7 +184,7 @@ When running, BlitzForge displays:
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║              BLITZFORGE - DEMO MODE ACTIVE                ║
-║   ⚠️  USE ONLY ON YOUR OWN DEMO TARGETS - LEGAL USE ONLY  ║
+║ 🎈🎢  USE ONLY ON YOUR OWN DEMO TARGETS - LEGAL USE ONLY  ║
 ╚═══════════════════════════════════════════════════════════╝
 
  PERFORMANCE METRICS
@@ -327,13 +326,11 @@ SHA256: 950 MH/s (dictionary mode, 8 workers)
 
 ## Contributing
 
-This is an educational demonstration tool. Contributions welcome for:
+Contributions welcome for:
 - Additional hash algorithm support
 - Performance optimizations
 - Better terminal UI
 - Documentation improvements
-
-Please maintain the educational focus and safety-first approach.
 
 ---
 
@@ -360,5 +357,6 @@ Learn more about password security:
 - [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
 - [Have I Been Pwned](https://haveibeenpwned.com/)
 - [Argon2 Password Hashing](https://github.com/P-H-C/phc-winner-argon2)
+- Common Sense
 
-**Remember: Use strong, unique passwords and enable 2FA wherever possible!**
+**Remember: Use strong, unique passwords and enable 2FA wherever possible 🙃**
