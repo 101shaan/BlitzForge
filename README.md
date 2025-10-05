@@ -1,4 +1,4 @@
-# BlitzForge 🔥
+# BlitzForge
 
 **A terminal-only, high-performance password cracker demo for educational purposes.**
 
@@ -7,16 +7,16 @@
 
 ---
 
-## ⚠️ CRITICAL SAFETY WARNING
+## SAFETY WARNING
 
 **THIS TOOL IS FOR DEMONSTRATION AND EDUCATIONAL PURPOSES ONLY.**
 
 - Use ONLY on demo targets you created yourself
 - Do NOT use on real accounts, third-party systems, or unauthorized data
-- Unauthorized password cracking is ILLEGAL and UNETHICAL
+- Unauthorized password cracking is ILLEGAL and UNETHICAL and all that stuff
 - This tool includes ONLY demo accounts created by the operator
 
-**By using this tool, you acknowledge you will only use it on your own demo data.**
+**Just use the tool on the demos por favor**
 
 ---
 
