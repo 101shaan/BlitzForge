@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Algorithm {
+    BlitzHash,  // custom ultra-fast hash (demo only - not cryptographically secure)
     Md5,
     Sha1,
     Sha256,
