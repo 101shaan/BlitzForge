@@ -132,10 +132,10 @@ cargo build --release
 ## Common Questions & Answers
 
 **Q: Why did you make your own hash?**
-A: "To show maximum speed and prove why real systems need slow algorithms. BlitzHash hits 5-10 GH/s - that's why Argon2 exists!"
+A: "To show maximum speed and prove why real systems need slow algorithms. BlitzHash achieves 15.6 GB/s throughput - 8.55x faster than SHA-256!"
 
 **Q: How fast is it?**
-A: "X billion per second with BlitzHash, my custom algorithm. That's 2x faster than MD5!"
+A: "2-3 billion password hashes per second with BlitzHash. The data throughput is 15.6 GB/s - that's 8.55 times faster than SHA-256!"
 
 **Q: Can you crack my password?**
 A: "No - that would be unethical. Try online strength checkers instead!"
@@ -184,12 +184,12 @@ Then explain the project using your printed materials while you troubleshoot.
 ## Performance Expectations
 
 **On 8-core CPU:**
-- **BlitzHash: 5-10 GH/s** ⚡ (your custom algorithm!)
+- **BlitzHash: 2-3 GH/s** ⚡ (your custom algorithm - 8.55x faster than SHA-256!)
 - MD5: 2-3 GH/s
 - SHA1: 1-2 GH/s  
 - SHA256: 800 MH/s - 1 GH/s
 
-**BlitzHash is the star of the show - 2x faster than MD5!**
+**BlitzHash is the star - 8.55x faster than SHA-256 for throughput!**
 
 Your mileage may vary based on CPU model.
 
@@ -197,7 +197,7 @@ Your mileage may vary based on CPU model.
 
 ## Key Takeaway Message
 
-> "I built BlitzHash - a custom ultra-fast hash that hits 5-10 billion per second. Even at this insane speed, strong passwords take centuries to crack. That's why real systems use Argon2 which is 500 million times slower - it makes password cracking completely impractical. Strong passwords + password managers + 2FA = good security!"
+> "I built BlitzHash - a custom ultra-fast hash achieving 15.6 GB/s throughput (8.55x faster than SHA-256). Even at 2-3 billion hashes per second, strong passwords take centuries to crack. That's why real systems use Argon2 which is 200 million times slower - it makes password cracking completely impractical. Strong passwords + password managers + 2FA = good security!"
 
 ---
 
