@@ -1,6 +1,6 @@
 # BlitzHash: Custom Ultra-Fast Hash Function
 
-**For the technically curious judges and parents**
+**For the technically curious people**
 
 ---
 
