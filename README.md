@@ -21,13 +21,6 @@ This project is strictly for **education, testing, and computer-science demos**.
 BlitzForge shows how password-cracking works under the hood — and why secure password design matters.
 It’s built to highlight:
 
-* How different password strategies resist attacks
-* Why slow hashes (like Argon2) exist in the first place
-* How far your hardware can be pushed with proper optimization
-* How to visualize cracking performance in real time
-
-Perfect for classrooms, cybersecurity workshops, or anyone curious about the raw math and CPU grunt behind password cracking.
-
 ---
 
 ## Features
@@ -52,7 +45,7 @@ Perfect for classrooms, cybersecurity workshops, or anyone curious about the raw
 ### Build
 
 ```bash
-git clone https://github.com/yourusername/blitzforge.git
+git clone https://github.com/101shaan/BlitzForge.git
 cd blitzforge
 cargo build --release
 ```
@@ -193,7 +186,7 @@ blitzforge run --strategy hybrid --wordlist common.txt --mask "?d?d"
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║              BLITZFORGE - DEMO MODE ACTIVE                ║
-║   ⚠️  LEGAL USE ONLY - DEMONSTRATION PURPOSES             ║
+║ 🎈🎢  USE ONLY ON YOUR OWN DEMO TARGETS - LEGAL USE ONLY  ║
 ╚═══════════════════════════════════════════════════════════╝
 
  PERFORMANCE
@@ -335,8 +328,11 @@ SHA256: ~950 MH/s (dictionary mode, 8 threads)
 
 ## Contributing
 
-Open to contributions — new hash algos, UI polish, speed tweaks, docs, whatever.
-Just keep it **educational**, **safe**, and **clear about what this tool is for.**
+Contributions welcome for:
+- Additional hash algorithm support
+- Performance optimizations
+- Better terminal UI
+- Documentation improvements
 
 ---
 
@@ -362,9 +358,10 @@ MIT — see the LICENSE file.
 * [Have I Been Pwned](https://haveibeenpwned.com/)
 * [Argon2 Password Hashing](https://github.com/P-H-C/phc-winner-argon2)
 
-**Moral of the story:**
-Use long, random passwords.
-Turn on 2FA.
-And don’t try to outsmart physics — weak passwords lose every time.
+Learn more about password security:
+- [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+- [Have I Been Pwned](https://haveibeenpwned.com/)
+- [Argon2 Password Hashing](https://github.com/P-H-C/phc-winner-argon2)
+- Common Sense
 
----
+**Remember: Use strong, unique passwords and enable 2FA wherever possible 🙃**

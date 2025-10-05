@@ -296,7 +296,7 @@ RUSTFLAGS="-C target-cpu=native" cargo build --release
 
 ## Contact & Links
 
-**GitHub:** [github.com/yourusername/blitzforge]  
+**GitHub:** [github.com/101shaan/BlitzForge]  
 **Documentation:** See README.md  
 **Questions:** Ask at demo table!
 
