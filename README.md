@@ -1,55 +1,53 @@
 # BlitzForge
 
-**A terminal-only, high-performance password cracker demo for educational purposes.**
+**A terminal-only, high-performance password-cracking demo — built purely for learning and showing off computing power.**
 
 [![Rust](https://img.shields.io/badge/rust-stable-orange.svg)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
----
 
-## SAFETY WARNING
+## 🙃 Safety First
 
-**THIS TOOL IS FOR DEMONSTRATION AND EDUCATIONAL PURPOSES ONLY.**
+BlitzForge exists to **demonstrate** password-cracking principles — not to break real accounts.
+You should **only** use it on demo targets you create yourself.
 
-- Use ONLY on demo targets you created yourself
-- Do NOT use on real accounts, third-party systems, or unauthorized data
-- Unauthorized password cracking is ILLEGAL and UNETHICAL and all that stuff
-- This tool includes ONLY demo accounts created by the operator
-
-**Just use the tool on the demos por favor**
+If you point this thing at real data or third-party systems, that’s on you — and it’s illegal.
+This project is strictly for **education, testing, and computer-science demos**.
 
 ---
 
-## What is BlitzForge?
+## What Is BlitzForge?
 
-BlitzForge is a high-performance password cracking demonstration tool that shows:
-- How different password strategies resist attacks
-- The importance of password complexity
-- Real-time performance metrics and hardware utilization
-- Why slow hashing algorithms (like Argon2) are critical for security
+BlitzForge shows how password-cracking works under the hood — and why secure password design matters.
+It’s built to highlight:
 
-Perfect for security education, computer science demonstrations, and understanding computational limits.
+* How different password strategies resist attacks
+* Why slow hashes (like Argon2) exist in the first place
+* How far your hardware can be pushed with proper optimization
+* How to visualize cracking performance in real time
+
+Perfect for classrooms, cybersecurity workshops, or anyone curious about the raw math and CPU grunt behind password cracking.
 
 ---
 
 ## Features
 
-✅ **Multiple attack modes**: Dictionary, mask, brute-force, hybrid  
-✅ **Multi-threaded CPU optimization**: Scales across all cores  
-✅ **Live terminal UI**: Real-time hashes/sec, progress bars, hardware metrics  
-✅ **Custom BlitzHash algorithm**: Ultra-fast custom hash (5-10 GH/s)  
-✅ **Standard algorithms**: MD5, SHA1, SHA256, MD4 for comparison  
-✅ **Benchmark logging**: CSV export for analysis  
-✅ **Safe by design**: Demo-only with prominent warnings  
+✅ **Attack modes**: Dictionary, mask, brute-force, and hybrid   
+✅ **Multi-core CPU parallelism** — scales across all threads  
+✅ **Live terminal UI** with speeds, progress, and hardware stats  
+✅ **BlitzHash** — custom demo hash for insane performance (5–10 GH/s)  
+✅ **Compare standard hashes**: MD5, SHA-1, SHA-256, MD4  
+✅ **CSV benchmark logging** for analysis   
+✅ **Safe by design**: demo-only usage, clearly labeled   
 
 ---
 
-## Quick Start
+## Getting Started
 
 ### Prerequisites
 
-- Rust (stable) - install from [rustup.rs](https://rustup.rs/)
-- Linux/macOS/Windows (cross-platform)
+* Rust (stable) → [rustup.rs](https://rustup.rs/)
+* Works on Linux, macOS, or Windows
 
 ### Build
 
@@ -59,14 +57,16 @@ cd blitzforge
 cargo build --release
 ```
 
-For maximum performance on your CPU:
+For max performance on your machine:
+
 ```bash
 RUSTFLAGS="-C target-cpu=native" cargo build --release
 ```
 
 ### Run the Demo
 
-**Step 1: Generate demo targets**
+**1. Generate demo targets**
+
 ```bash
 ./target/release/blitzforge generate-targets \
   --out targets.json \
@@ -74,7 +74,8 @@ RUSTFLAGS="-C target-cpu=native" cargo build --release
   --algorithms blitzhash,md5,sha256
 ```
 
-**Step 2: Run the cracker**
+**2. Run the cracker**
+
 ```bash
 ./target/release/blitzforge run \
   --targets targets.json \
@@ -84,19 +85,19 @@ RUSTFLAGS="-C target-cpu=native" cargo build --release
   --log results.csv
 ```
 
-**Step 3: Quick demo script**
+**3. Or just use the quick demo script**
+
 ```bash
 ./demo_run.sh
 ```
 
 ---
 
-## Usage
+## Usage Overview
 
-### Commands
+### `generate-targets`
 
-#### `generate-targets`
-Create demo target hashes from known passwords.
+Make demo hashes from a list of passwords.
 
 ```bash
 blitzforge generate-targets \
@@ -105,8 +106,9 @@ blitzforge generate-targets \
   --algorithms md5,sha256
 ```
 
-#### `run`
-Execute cracking job with live metrics.
+### `run`
+
+Run a cracking job with live stats.
 
 ```bash
 blitzforge run \
@@ -119,21 +121,24 @@ blitzforge run \
 ```
 
 **Options:**
-- `--strategy`: Attack mode (dictionary/mask/brute/hybrid)
-- `--wordlist`: Path to dictionary file (for dictionary mode)
-- `--mask`: Pattern like `?l?l?l?d?d` (lowercase letters + digits)
-- `--workers`: Number of CPU threads (default: CPU count)
-- `--repeat`: Run N times for benchmarking (default: 1)
-- `--log`: CSV file to append results
 
-#### `report`
-Summarize benchmark results.
+* `--strategy`: Attack type
+* `--wordlist`: Wordlist path (for dictionary mode)
+* `--mask`: Pattern like `?l?l?l?d?d` (letters + digits)
+* `--workers`: CPU threads (defaults to all cores)
+* `--repeat`: Repeat runs for benchmarking
+* `--log`: Save results to CSV
+
+### `report`
+
+Summarize and analyze benchmark results.
 
 ```bash
 blitzforge report --csv bench_results.csv
 ```
 
-#### `selftest`
+### `selftest`
+
 Run internal tests and micro-benchmarks.
 
 ```bash
@@ -142,149 +147,155 @@ blitzforge selftest
 
 ---
 
-## Attack Strategies
+## Attack Modes
 
-### Dictionary Attack
-Tests passwords from a wordlist with optional mutations.
+### Dictionary
+
+Tests passwords from a wordlist (with optional mutations).
 
 ```bash
 blitzforge run --targets targets.json --strategy dictionary --wordlist rockyou.txt
 ```
 
-### Mask Attack
-Pattern-based generation using character sets:
-- `?l` = lowercase (a-z)
-- `?u` = uppercase (A-Z)
-- `?d` = digit (0-9)
-- `?s` = special (!@#$...)
+### Mask
+
+Pattern-based guessing using:
+
+* `?l` = lowercase
+* `?u` = uppercase
+* `?d` = digit
+* `?s` = special
 
 ```bash
-blitzforge run --targets targets.json --strategy mask --mask "?l?l?l?d?d"
+blitzforge run --strategy mask --mask "?l?l?l?d?d"
 ```
 
 ### Brute Force
-Exhaustive search over character set with length range.
+
+Exhaustive search with a custom charset and length range.
 
 ```bash
-blitzforge run --targets targets.json --strategy brute --charset "abc123" --min-len 4 --max-len 6
+blitzforge run --strategy brute --charset "abc123" --min-len 4 --max-len 6
 ```
 
 ### Hybrid
-Dictionary + mask rules combined.
+
+Combine a dictionary with a mask.
 
 ```bash
-blitzforge run --targets targets.json --strategy hybrid --wordlist common.txt --mask "?d?d"
+blitzforge run --strategy hybrid --wordlist common.txt --mask "?d?d"
 ```
 
 ---
 
 ## Terminal UI
 
-When running, BlitzForge displays:
-
 ```
 ╔═══════════════════════════════════════════════════════════╗
 ║              BLITZFORGE - DEMO MODE ACTIVE                ║
-║   ⚠️  USE ONLY ON YOUR OWN DEMO TARGETS - LEGAL USE ONLY  ║
+║   ⚠️  LEGAL USE ONLY - DEMONSTRATION PURPOSES             ║
 ╚═══════════════════════════════════════════════════════════╝
 
- PERFORMANCE METRICS
+ PERFORMANCE
  ┌─────────────────────────────────────────────────────────┐
  │  Speed: 2,847,392 hashes/sec                            │
  │  Found: 1/3 targets                                      │
  │  Time:  00:02:34                                         │
  └─────────────────────────────────────────────────────────┘
 
- TARGET PROGRESS
+ TARGETS
  [alice@demo1]  ████████████████████░░░░░░░░░  67% (MD5)
- [bob@demo2]    ████████████████████████████  FOUND! ✓
+ [bob@demo2]    ████████████████████████████  FOUND ✓
  [charlie@demo3] ██░░░░░░░░░░░░░░░░░░░░░░░░░  8% (SHA256)
 
- HARDWARE UTILIZATION
- CPU:  [████████████████░░░░] 78%  (8 cores)
- MEM:  [████░░░░░░░░░░░░░░░░] 18%  (2.3 GB / 16 GB)
+ HARDWARE
+ CPU: [████████████████░░░░] 78% (8 cores)
+ MEM: [████░░░░░░░░░░░░░░░░] 18% (2.3 GB / 16 GB)
 
- THROUGHPUT HISTORY (last 60s)
+ THROUGHPUT (last 60 s)
  MH/s  ▂▃▅▆█████▇▆▅▄▃▂▂▃▄▅▆███████▇▆▅▅▄▃▃▄▅▆███
 ```
 
 ---
 
-## Benchmark Results
+## Benchmark Logging
 
-Results are logged to CSV with columns:
-- `timestamp`: ISO 8601 timestamp
-- `target_id`: Target identifier
-- `algorithm`: Hash algorithm used
-- `strategy`: Attack strategy
-- `workers`: Number of CPU threads
-- `keyspace_size`: Total candidates possible
-- `guesses_tried`: Candidates tested
-- `time_s`: Runtime in seconds
-- `hashes_per_s`: Throughput
-- `found`: Success (true/false)
-- `password_length`: Length of found password
-- `found_in_s`: Time to crack (if found)
+Each CSV entry includes:
+
+* timestamp
+* target_id
+* algorithm
+* strategy
+* workers
+* keyspace_size
+* guesses_tried
+* time_s
+* hashes_per_s
+* found (true/false)
+* password_length
+* found_in_s
 
 ---
 
 ## Performance Tips
 
-### Maximum Speed
+### Squeeze Out Every Cycle
+
 ```bash
-# use native CPU instructions
 RUSTFLAGS="-C target-cpu=native" cargo build --release
-
-# set workers to core count
 blitzforge run --workers $(nproc)
-
-# use efficient algorithms (MD5 > SHA256 > SHA512)
 ```
 
+MD5 > SHA-256 > SHA-512 in speed order.
+SHA-512 is safer, but much slower — that’s the point.
+
 ### Benchmark Mode
+
 ```bash
-# run 10 times and export median stats
 blitzforge run --repeat 10 --log benchmark.csv
 blitzforge report --csv benchmark.csv
 ```
 
 ---
 
-## Demo Script for Presentations
+## Demo Script (for Presentations)
 
-The included `demo_run.sh` demonstrates:
+`demo_run.sh` walks through:
 
-1. **Quick crack** - Weak password ("password123") found in ~2 seconds
-2. **Slow crack** - Strong password showing progress over 30+ seconds
-3. **Live metrics** - Real-time performance visualization
-4. **Hardware utilization** - CPU/memory graphs
+1. A quick crack (“password123”) found instantly
+2. A slow crack (complex passphrase) grinding away
+3. Real-time metrics visualization
+4. CPU + memory stats updating live
 
-**30-second pitch:**
-> "BlitzForge is a password cracker demo showing why password strength matters. Watch as it finds 'password123' instantly, but struggles with complex passphrases. This demonstrates why you should use long, random passwords and why services should use slow hashing algorithms like Argon2."
+**30-second explanation:**
+
+> BlitzForge shows why password strength matters.
+> Weak ones crumble instantly; strong ones make your CPU sweat.
+> It’s proof that long, random passwords — and slow hashes like Argon2 — actually work.
 
 ---
 
-## Project Structure
+## Project Layout
 
 ```
 blitzforge/
 ├── src/
-│   ├── main.rs              # cli entry point
+│   ├── main.rs
 │   ├── core/
-│   │   ├── engine.rs        # cracking engine
-│   │   ├── hasher.rs        # hash implementations
-│   │   ├── generator.rs     # candidate generators
-│   │   └── batch.rs         # batch processing
+│   │   ├── engine.rs
+│   │   ├── hasher.rs
+│   │   ├── generator.rs
+│   │   └── batch.rs
 │   ├── cli/
-│   │   ├── commands.rs      # subcommand handlers
-│   │   ├── ui.rs            # terminal interface
-│   │   └── logger.rs        # csv logging
+│   │   ├── commands.rs
+│   │   ├── ui.rs
+│   │   └── logger.rs
 │   └── tools/
-│       └── target_gen.rs    # demo target generator
+│       └── target_gen.rs
 ├── wordlists/
-│   └── common-10k.txt       # sample wordlist
-├── demo_run.sh              # quick demo script
-├── targets.json             # example targets file
+│   └── common-10k.txt
+├── demo_run.sh
+├── targets.json
 └── README.md
 ```
 
@@ -293,72 +304,67 @@ blitzforge/
 ## Testing
 
 ```bash
-# run all tests
 cargo test
-
-# run with output
 cargo test -- --nocapture
-
-# run selftest command
 ./target/release/blitzforge selftest
 ```
 
 ---
 
-## Reproducible Benchmarks
+## Benchmark Reproduction
 
-To reproduce performance numbers:
+1. Record hardware (CPU, cores, RAM)
+2. Prefer Linux for consistent timing
+3. Always build in release mode
+4. Run once to warm caches
+5. Close background apps
 
-1. **Hardware**: Document your CPU model, core count, RAM
-2. **OS**: Linux preferred for consistent performance
-3. **Build**: Use release mode with native CPU flags
-4. **Warm-up**: First run warms caches; subsequent runs are faster
-5. **Background**: Close other applications for clean benchmarks
+Example:
 
-Example benchmark report:
 ```
-System: AMD Ryzen 9 5950X (16C/32T), 32GB RAM, Ubuntu 22.04
-Build:  rustc 1.75.0, RUSTFLAGS="-C target-cpu=native"
-MD5:    2.8 GH/s (dictionary mode, 8 workers)
-SHA256: 950 MH/s (dictionary mode, 8 workers)
+CPU: AMD Ryzen 9 5950X (16 C / 32 T)
+RAM: 32 GB
+OS:  Ubuntu 22.04
+Build: rustc 1.75.0 + native flags
+
+MD5:    ~2.8 GH/s (dictionary mode, 8 threads)
+SHA256: ~950 MH/s (dictionary mode, 8 threads)
 ```
 
 ---
 
 ## Contributing
 
-This is an educational demonstration tool. Contributions welcome for:
-- Additional hash algorithm support
-- Performance optimizations
-- Better terminal UI
-- Documentation improvements
-
-Please maintain the educational focus and safety-first approach.
+Open to contributions — new hash algos, UI polish, speed tweaks, docs, whatever.
+Just keep it **educational**, **safe**, and **clear about what this tool is for.**
 
 ---
 
 ## License
 
-MIT License - see LICENSE file
+MIT — see the LICENSE file.
 
 ---
 
-## Acknowledgments
+## Thanks To
 
-Built with:
-- [Rust](https://www.rust-lang.org/) - Systems programming language
-- [rayon](https://github.com/rayon-rs/rayon) - Data parallelism
-- [indicatif](https://github.com/console-rs/indicatif) - Progress bars
-- [crossterm](https://github.com/crossterm-rs/crossterm) - Terminal manipulation
-- [md5](https://docs.rs/md5/), [sha1](https://docs.rs/sha1/), [sha2](https://docs.rs/sha2/) - Hash implementations
+* [Rust](https://www.rust-lang.org/)
+* [rayon](https://github.com/rayon-rs/rayon)
+* [indicatif](https://github.com/console-rs/indicatif)
+* [crossterm](https://github.com/crossterm-rs/crossterm)
+* [md5](https://docs.rs/md5/), [sha1](https://docs.rs/sha1/), [sha2](https://docs.rs/sha2/)
 
 ---
 
-## Educational Resources
+## Learn More
 
-Learn more about password security:
-- [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
-- [Have I Been Pwned](https://haveibeenpwned.com/)
-- [Argon2 Password Hashing](https://github.com/P-H-C/phc-winner-argon2)
+* [OWASP Password Storage Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)
+* [Have I Been Pwned](https://haveibeenpwned.com/)
+* [Argon2 Password Hashing](https://github.com/P-H-C/phc-winner-argon2)
 
-**Remember: Use strong, unique passwords and enable 2FA wherever possible!**
+**Moral of the story:**
+Use long, random passwords.
+Turn on 2FA.
+And don’t try to outsmart physics — weak passwords lose every time.
+
+---
