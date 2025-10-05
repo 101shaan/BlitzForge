@@ -1,0 +1,63 @@
+[package]
+name = "blitzforge"
+version = "1.0.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "A high-performance password cracker demo for educational purposes"
+license = "MIT"
+repository = "https://github.com/yourusername/blitzforge"
+
+[dependencies]
+# hashing algorithms
+md-5 = "0.10"
+sha1 = "0.10"
+sha2 = "0.10"
+
+# parallelism
+rayon = "1.8"
+
+# terminal ui
+crossterm = "0.27"
+indicatif = "0.17"
+
+# cli argument parsing
+clap = { version = "4.4", features = ["derive"] }
+
+# serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+csv = "1.3"
+
+# utilities
+hex = "0.4"
+rand = "0.8"
+chrono = "0.4"
+anyhow = "1.0"
+hashbrown = "0.14"
+
+# system info
+sysinfo = "0.30"
+
+# memory mapping
+memmap2 = "0.9"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.bench]
+inherits = "release"
+
+[[bin]]
+name = "blitzforge"
+path = "src/main.rs"
+
+[[bench]]
+name = "hash_benchmark"
+harness = false

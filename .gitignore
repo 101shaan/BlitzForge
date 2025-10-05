@@ -1,0 +1,37 @@
+# rust build artifacts
+/target/
+Cargo.lock
+
+# demo files (generated)
+targets.json
+demo_passwords.txt
+wordlist.txt
+demo_results.csv
+benchmark.csv
+*.csv
+
+# ide
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# os
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+
+# benchmark results
+results/
+showcase_results/
+*.tar.gz
+
+# wordlists (too large for git)
+wordlists/*.txt
+!wordlists/.gitkeep
+BUILD_CHECKLIST.MD
+PRESENTATION.MD
+QUICK_REFERENCE.MD

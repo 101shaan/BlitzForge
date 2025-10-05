@@ -1,18 +1,18 @@
-//! BlitzHash - HIGH PERFORMANCE (Actually Fast Edition)
-//! **WARNING: NOT CRYPTOGRAPHICALLY SECURE**
+//! blitzhash - high performance hash function
+//! **warning: not cryptographically secure - demo only**
 
 const K1: u64 = 0x517cc1b727220a95;
 const K2: u64 = 0x85ebca6b2f3c8b51;
 const K3: u64 = 0xc2b2ae3d27d4eb4f;
 const K4: u64 = 0x165667b19e3779f9;
 
-/// Fast unaligned u64 read - NO BOUNDS CHECKS
+/// fast unaligned u64 read - no bounds checks
 #[inline(always)]
 unsafe fn read_u64_unaligned(ptr: *const u8) -> u64 {
     u64::from_le(std::ptr::read_unaligned(ptr as *const u64))
 }
 
-/// NUCLEAR mixing - inline everything
+/// nuclear mixing - inline everything
 #[inline(always)]
 fn mix_chunk(mut h: u64, chunk: u64, k: u64) -> u64 {
     h ^= chunk;
@@ -23,15 +23,15 @@ fn mix_chunk(mut h: u64, chunk: u64, k: u64) -> u64 {
     h
 }
 
-/// Ultra-fast baseline hash - FIXED
+/// ultra-fast baseline hash - fixed
 pub fn blitz_hash(seed: u64, data: &[u8]) -> [u8; 32] {
     let mut state = [seed ^ K1, seed ^ K2, seed ^ K3, seed ^ K4];
     let mut pos = 0;
     
-    // Process 32-byte chunks (4×8) - UNROLLED with proper reads
+    // process 32-byte chunks (4×8) - unrolled with proper reads
     while pos + 32 <= data.len() {
         unsafe {
-            // Prefetch next cache line
+            // prefetch next cache line
             #[cfg(target_arch = "x86_64")]
             {
                 use std::arch::x86_64::_mm_prefetch;
@@ -56,7 +56,7 @@ pub fn blitz_hash(seed: u64, data: &[u8]) -> [u8; 32] {
         pos += 32;
     }
     
-    // Process remaining 8-byte chunks
+    // process remaining 8-byte chunks
     while pos + 8 <= data.len() {
         unsafe {
             let chunk = read_u64_unaligned(data.as_ptr().add(pos));
@@ -68,28 +68,28 @@ pub fn blitz_hash(seed: u64, data: &[u8]) -> [u8; 32] {
         pos += 8;
     }
     
-    // Tail handling - DISTRIBUTE ACROSS ALL LANES
+    // tail handling - distribute across all lanes
     if pos < data.len() {
         let mut tail = [0u8; 8];
         let rem = data.len() - pos;
         tail[..rem].copy_from_slice(&data[pos..]);
         let chunk = u64::from_le_bytes(tail);
         
-        // Mix tail into ALL lanes with rotation for diffusion
+        // mix tail into all lanes with rotation for diffusion
         state[0] = mix_chunk(state[0], chunk, K1);
         state[1] = mix_chunk(state[1], chunk.rotate_left(13), K2);
         state[2] = mix_chunk(state[2], chunk.rotate_left(27), K3);
         state[3] = mix_chunk(state[3], chunk.rotate_left(43), K4);
     }
     
-    // Length mixing
+    // length mixing
     let len = data.len() as u64;
     state[0] ^= len;
     state[1] ^= len.rotate_right(17);
     state[2] ^= len.rotate_right(31);
     state[3] ^= len.rotate_right(47);
     
-    // Final avalanche - AGGRESSIVE (4 rounds for better diffusion)
+    // final avalanche - aggressive (4 rounds for better diffusion)
     for _ in 0..4 {
         state[0] = state[0].wrapping_mul(K1) ^ state[0].rotate_right(29);
         state[1] = state[1].wrapping_mul(K2) ^ state[1].rotate_right(31);
@@ -105,7 +105,7 @@ pub fn blitz_hash(seed: u64, data: &[u8]) -> [u8; 32] {
     output
 }
 
-/// Streaming API (kept for compatibility)
+/// streaming api (kept for compatibility)
 #[derive(Clone)]
 pub struct BlitzState {
     state: [u64; 4],
@@ -128,7 +128,7 @@ impl BlitzState {
         let mut pos = 0;
         self.total_len += data.len() as u64;
 
-        // Handle buffered bytes first
+        // handle buffered bytes first
         if self.buffer_len > 0 {
             let needed = 8 - self.buffer_len;
             let available = data.len().min(needed);
@@ -139,7 +139,7 @@ impl BlitzState {
 
             if self.buffer_len == 8 {
                 let chunk = u64::from_le_bytes(self.buffer);
-                // Mix into ALL lanes consistently
+                // mix into all lanes consistently
                 self.state[0] = mix_chunk(self.state[0], chunk, K1);
                 self.state[1] = mix_chunk(self.state[1], chunk.rotate_left(11), K2);
                 self.state[2] = mix_chunk(self.state[2], chunk.rotate_left(23), K3);
@@ -148,7 +148,7 @@ impl BlitzState {
             }
         }
 
-        // Process 8-byte chunks
+        // process 8-byte chunks
         while pos + 8 <= data.len() {
             unsafe {
                 let chunk = read_u64_unaligned(data.as_ptr().add(pos));
@@ -160,7 +160,7 @@ impl BlitzState {
             pos += 8;
         }
 
-        // Buffer remaining bytes
+        // buffer remaining bytes
         if pos < data.len() {
             let remaining = data.len() - pos;
             self.buffer[..remaining].copy_from_slice(&data[pos..]);
@@ -169,27 +169,27 @@ impl BlitzState {
     }
 
     pub fn finalize(mut self) -> [u8; 32] {
-        // Process remaining buffered bytes
+        // process remaining buffered bytes
         if self.buffer_len > 0 {
             for i in self.buffer_len..8 {
                 self.buffer[i] = 0;
             }
             let chunk = u64::from_le_bytes(self.buffer);
-            // Mix into ALL lanes
+            // mix into all lanes
             self.state[0] = mix_chunk(self.state[0], chunk, K1);
             self.state[1] = mix_chunk(self.state[1], chunk.rotate_left(13), K2);
             self.state[2] = mix_chunk(self.state[2], chunk.rotate_left(27), K3);
             self.state[3] = mix_chunk(self.state[3], chunk.rotate_left(43), K4);
         }
 
-        // Mix in total length
+        // mix in total length
         let len = self.total_len;
         self.state[0] ^= len;
         self.state[1] ^= len.rotate_right(17);
         self.state[2] ^= len.rotate_right(31);
         self.state[3] ^= len.rotate_right(47);
 
-        // Final avalanche
+        // final avalanche
         for _ in 0..4 {
             self.state[0] = self.state[0].wrapping_mul(K1) ^ self.state[0].rotate_right(29);
             self.state[1] = self.state[1].wrapping_mul(K2) ^ self.state[1].rotate_right(31);
@@ -206,7 +206,7 @@ impl BlitzState {
     }
 }
 
-/// Parallel hashing - FIXED (no allocation, direct state mixing)
+/// parallel hashing - fixed (no allocation, direct state mixing)
 pub fn blitz_hash_parallel(seed: u64, data: &[u8], num_threads: usize) -> [u8; 32] {
     use rayon::prelude::*;
 
@@ -217,13 +217,13 @@ pub fn blitz_hash_parallel(seed: u64, data: &[u8], num_threads: usize) -> [u8; 3
     let chunk_size = (data.len() + num_threads - 1) / num_threads;
     let chunks: Vec<_> = data.chunks(chunk_size).collect();
 
-    // Return partial STATES not bytes - no serialization overhead
+    // return partial states not bytes - no serialization overhead
     let partial_states: Vec<[u64; 4]> = chunks
         .par_iter()
         .enumerate()
         .map(|(idx, chunk)| {
             let hash = blitz_hash(seed.wrapping_add(idx as u64), chunk);
-            // Convert bytes back to u64 states
+            // convert bytes back to u64 states
             [
                 u64::from_le_bytes(hash[0..8].try_into().unwrap()),
                 u64::from_le_bytes(hash[8..16].try_into().unwrap()),
@@ -233,7 +233,7 @@ pub fn blitz_hash_parallel(seed: u64, data: &[u8], num_threads: usize) -> [u8; 3
         })
         .collect();
 
-    // Combine states directly - NO ALLOCATION, NO RE-HASH
+    // combine states directly - no allocation, no re-hash
     let mut final_state = [seed ^ K1, seed ^ K2, seed ^ K3, seed ^ K4];
     for partial in partial_states {
         final_state[0] = mix_chunk(final_state[0], partial[0], K1);
@@ -242,7 +242,7 @@ pub fn blitz_hash_parallel(seed: u64, data: &[u8], num_threads: usize) -> [u8; 3
         final_state[3] = mix_chunk(final_state[3], partial[3], K4);
     }
 
-    // Final avalanche
+    // final avalanche
     for _ in 0..4 {
         final_state[0] = final_state[0].wrapping_mul(K1) ^ final_state[0].rotate_right(29);
         final_state[1] = final_state[1].wrapping_mul(K2) ^ final_state[1].rotate_right(31);
@@ -300,7 +300,7 @@ mod tests {
 
     #[test]
     fn test_tail_distribution() {
-        // Test that short inputs still hash differently
+        // test that short inputs still hash differently
         let h1 = blitz_hash(0, b"a");
         let h2 = blitz_hash(0, b"b");
         let h3 = blitz_hash(0, b"ab");
